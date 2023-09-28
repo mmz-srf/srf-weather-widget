@@ -53,7 +53,7 @@ jobs:
         with:
           path: |
             client/dist/
-            client/dist/assets
+            client/dist/assets/
 
   deploy:
     needs: build-site
