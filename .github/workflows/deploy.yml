@@ -25,6 +25,9 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  VITE_ASSET_BASE: ./srf-weather-widget
+
 jobs:
   build-site:
     runs-on: ubuntu-latest
