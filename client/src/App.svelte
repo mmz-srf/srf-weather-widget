@@ -139,7 +139,7 @@
 </script>
 
 <TailwindCss />
-<main>
+<main class="bg-sky-600">
   {#await getData() then data}
     <h2>{data.geolocation.default_name}</h2>
     <h3>{data.days[0].TN_C} | {data.days[0].TX_C}</h3>
