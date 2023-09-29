@@ -32,15 +32,13 @@
     <div
       class="flex flex-row h-20 ml-6 space-x-6 overflow-scroll text-xs font-bold scrollbar-hide"
     >
-      {#each weatherData.hours as hours, index}
-        {#if index === 0 || (index !== 0 && new Date(hours.date_time) >= new Date())}
+      {#each weatherData.hours as hours}
+        {#if new Date(hours.date_time) >= new Date()}
           <SingleDay
-            currentTime={index === 0
-              ? "Jetzt"
-              : new Date(hours.date_time).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
+            currentTime={new Date(hours.date_time).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
             symbol={hours.symbol_code}
             dimensions="w-6 h-6"
             dailyTemp={hours.TTT_C}
