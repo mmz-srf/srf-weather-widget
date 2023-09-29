@@ -1,11 +1,17 @@
 export default {
   plugins: [],
   theme: {
-    extend: {}
+    extend: {
+      colors: {
+        widget: {
+          dark: "#08518B",
+        },
+      },
+    },
   },
   purge: ["./index.html", "./src/**/*.{svelte,js,ts}"], //for unused css
   variants: {
-    extend: {}
+    extend: {},
   },
-  darkmode: false // or 'media' or 'class'
+  darkmode: false, // or 'media' or 'class'
 };

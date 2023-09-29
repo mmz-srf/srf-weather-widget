@@ -120,10 +120,10 @@
     "6": Icon6,
     "7": Icon7,
     "8": Icon8,
-    "9": Icon9
+    "9": Icon9,
   };
 
   export let symbol;
 </script>
 
-<img src={iconMap[symbol]} alt="" class="h-16" />
+<img src={iconMap[symbol]} alt="" class="w-14 h-14" />
