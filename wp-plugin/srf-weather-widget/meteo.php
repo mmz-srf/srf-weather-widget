@@ -29,7 +29,17 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
         return 'Not a valid widget size set.';
     }
 
-    return '<div class="srf-weather-widget" 
+    $key = get_option(SrfWeatherWidgetSettings::SRF_WEATHER_API_KEY);
+    $secret = get_option(SrfWeatherWidgetSettings::SRF_WEATHER_API_SECRET);
+    $commentedKeys = '<!-- api-key: ' .$key.' api secret:' . $secret . ' -->';
+
+    $encoded = base64_encode($key.':'.$secret);
+    // TODO: send request for data and add it to data attribute
+
+
+    return
+        $commentedKeys .
+        '<div class="srf-weather-widget" 
         data-size="'.esc_html($widgetAtts['size']).'" 
         data-geolocation="'.esc_html($widgetAtts['geolocation']).'" 
         data-location-name="'.esc_html($widgetAtts['locationname']).'"></div>';

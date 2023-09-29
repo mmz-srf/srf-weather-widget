@@ -30,6 +30,5 @@ class SrfWeatherWidgetSettings {
     public static function initSettings() {
         register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_KEY);
         register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_SECRET);
-
     }
 }
