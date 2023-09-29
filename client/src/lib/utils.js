@@ -1,6 +1,8 @@
+const METEO_API = "https://www.srf.ch/meteoapi";
+
 const getGeolocationIdByLocationName = async (locationName) => {
   const response = await fetch(
-    `https://www.srf.ch/meteoapi/geolocationNames?name=${locationName}`
+    `${METEO_API}/geolocationNames?name=${locationName}`
   );
   if (response.ok) {
     const geolocationNames = await response.json();
@@ -10,7 +12,7 @@ const getGeolocationIdByLocationName = async (locationName) => {
 
 const getGeolocationIdByCoordinates = async (longitude, latitude) => {
   const response = await fetch(
-    `https://www.srf.ch/meteoapi//geolocations?longitude=${longitude}&latitude=${latitude}`
+    `${METEO_API}/geolocations?longitude=${longitude}&latitude=${latitude}`
   );
   if (response.ok) {
     const geolocations = await response.json();
@@ -58,9 +60,7 @@ const getGeolocationId = async (geolocation, locationName) => {
 export const getForecastPoint = async (geolocation, locationName) => {
   try {
     let geolocationId = await getGeolocationId(geolocation, locationName);
-    const response = await fetch(
-      `https://www.srf.ch/meteoapi/forecastpoint/${geolocationId}`
-    );
+    const response = await fetch(`${METEO_API}/forecastpoint/${geolocationId}`);
     if (response.ok) {
       return await response.json();
     }
