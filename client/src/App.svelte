@@ -1,36 +1,18 @@
 <script>
-  import { onMount } from "svelte";
   import TailwindCss from "./lib/TailwindCSS.svelte";
   import WeatherIcons from "./lib/WeatherIcons.svelte";
+  import { fetchData } from "./lib/utils";
 
   export let size;
   export let geolocation;
   export let locationName;
-
-  let weatherData = null;
-
-  async function fetchData() {
-    try {
-      const response = await fetch(
-        "https://www.srf.ch/meteoapi/forecastpoint/47.3797,8.5342"
-      );
-      if (response.ok) {
-        const data = await response.json();
-        weatherData = data;
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }
-
-  onMount(() => {
-    fetchData();
-  });
 </script>
 
 <TailwindCss />
 <main class="flex justify-center">
-  {#if weatherData}
+  {#await fetchData()}
+    <p>Loading...</p>
+  {:then weatherData}
     <div
       class="flex flex-row items-center justify-between w-full max-w-sm text-white bg-blue-500 border-2 rounded-md border-cyan-900"
     >
@@ -44,7 +26,7 @@
         <WeatherIcons symbol={weatherData.days[0].symbol_code.toString()} />
       </div>
     </div>
-  {:else}
-    <p>Loading...</p>
-  {/if}
+  {:catch}
+    <p>Error fetching data</p>
+  {/await}
 </main>
