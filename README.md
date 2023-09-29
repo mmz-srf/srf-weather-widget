@@ -25,4 +25,4 @@ Demo: https://mmz-srf.github.io/srf-weather-widget/
 | ------------- | ------------------ | --------------- | ------------- | -------- |
 | Size          | data-size          | S, M, L         | S             | No       |
 | Geolocation   | data-geolocation   |                 | 7.4171,8.5612 | No       |
-| Location Name | data-location-name | Zürich, Genf    | Zürich        | No       |
+| Location Name | data-location-name | Zürich, Genf    |               | No       |
