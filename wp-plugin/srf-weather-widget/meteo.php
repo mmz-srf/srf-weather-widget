@@ -6,9 +6,9 @@
 Plugin Name: Meteo
 */
 
+include __DIR__ . '/SrfWeatherWidgetSettings.php';
 
-
-// Now we set that function up to execute when the admin_notices action is called.
+new SrfWeatherWidgetSettings();
 
 // We need some CSS to position the paragraph.
 function meteo_resources() {
@@ -22,3 +22,6 @@ function meteo_widget() {
 
 add_action( 'wp_head', 'meteo_resources' );
 add_shortcode('meteo', 'meteo_widget'); // add your code.
+
+// add default settings
+
