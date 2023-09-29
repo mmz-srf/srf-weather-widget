@@ -6,7 +6,7 @@
 </script>
 
 <div
-  class="flex flex-row items-center justify-between w-full max-w-sm text-white shadow-lg shadow-gray-4ow 00 rounded-xl bg-widget-dark"
+  class="flex flex-row items-center justify-between w-full max-w-sm tracking-widest text-white shadow-lg shadow-gray-4ow 00 rounded-xl bg-widget-dark"
 >
   <div class="flex flex-col my-4 ml-6 space-y-1">
     <h2 class="text-sm">{weatherData.geolocation.default_name}</h2>
