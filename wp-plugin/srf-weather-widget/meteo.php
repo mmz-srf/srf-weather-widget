@@ -12,12 +12,12 @@ Plugin Name: Meteo
 
 // We need some CSS to position the paragraph.
 function meteo_resources() {
-    echo '<script src="https://mmz-srf.github.io/srf-weather-widget/assets/index-fd0920e5.js" type="text/javascript"></script>';
-    echo '<link rel="stylesheet" href="https://mmz-srf.github.io/srf-weather-widget/assets/index-4a6b12fb.css">';
+    echo '<script src="https://mmz-srf.github.io/srf-weather-widget/index.js" type="text/javascript"></script>';
+    echo '<link rel="stylesheet" href="https://mmz-srf.github.io/srf-weather-widget/index.css">';
 }
 
 function meteo_widget() {
-    return '<div id="main" class="main"></div>';
+    return '<div id="app"></div>';
 }
 
 add_action( 'wp_head', 'meteo_resources' );
