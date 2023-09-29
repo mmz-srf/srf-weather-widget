@@ -1,37 +1,35 @@
 <?php
 
 class SrfWeatherWidgetSettings {
-    const SRF_WEATHER_API_KEY = 'srf_weather_api_key';
-    const SRF_WEATHER_API_SECRET = 'srf_weather_api_secret_key';
+    const SRF_WEATHER_OPTION_GROUP = 'srf-weather-widget-auth';
+    const SRF_WEATHER_API_KEY = 'srf-weather-api-key';
+    const SRF_WEATHER_API_SECRET = 'srf-weather-api-secret-key';
 
     public function __construct()
     {
-        // Hook, um Standardwerte beim Aktivieren des Plugins zu setzen
-    }
-    public static function init() {
-        // set defaults after activation
-        register_activation_hook(__FILE__, array(self, 'activate_plugin'));
-        // remove stuff after deactivation plugin
-        register_deactivation_hook(__FILE__, array(self, 'deactivate_plugin'));
-        // cleanup settings after removal
-        register_uninstall_hook(__FILE__, array(self, 'uninstall_plugin'));
+        add_action('admin_menu', array(__CLASS__, 'adminMenu'));
+        add_action('admin_init', array(__CLASS__, 'initSettings'));
     }
 
-    public static function activate_plugin() {
-        // Standardwert für den Hello World-Text setzen
-        $default_text = 'World';
-        update_option(self::SRF_WEATHER_API_KEY, 'api-key');
-        update_option(self::SRF_WEATHER_API_SECRET, 'api-secret');
 
+
+    public static function adminMenu() {
+        add_menu_page(
+            'SRF Weather',// page title
+            'SRF Weather ☀️',// menu title
+            'manage_options',// role
+            'srf-weather-widget',// backend page identifier
+            [__CLASS__, 'displayWeatherWidgetSettings'] // callback function
+        );
     }
 
-    public static function deactivate_plugin() {
-        // nothing to do for now
+    public static function displayWeatherWidgetSettings() {
+        include(__DIR__.'/tpl/admin_settings.tpl.php');
     }
 
-    public static function uninstall_plugin() {
-        delete_option(self::SRF_WEATHER_API_KEY);
-        delete_option(self::SRF_WEATHER_API_SECRET);
+    public static function initSettings() {
+        register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_KEY);
+        register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_SECRET);
 
     }
 }
