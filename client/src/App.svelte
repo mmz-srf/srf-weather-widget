@@ -10,7 +10,7 @@
 
 <TailwindCss />
 <main class="flex justify-center mt-2">
-  {#await fetchData()}
+  {#await fetchData(geolocation, locationName)}
     <p>Loading...</p>
   {:then weatherData}
     <WeatherOverview {weatherData} {size} />
