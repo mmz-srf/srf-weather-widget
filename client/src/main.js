@@ -1,7 +1,7 @@
 import App from "./App.svelte";
 
-const app = new App({
-  target: document.getElementById("app")
+document.querySelectorAll(".srf-weather-widget").forEach((element) => {
+  new App({
+    target: element
+  });
 });
-
-export default app;
