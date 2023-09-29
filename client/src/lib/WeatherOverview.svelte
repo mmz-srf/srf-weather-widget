@@ -10,9 +10,7 @@
 >
   <div class="flex flex-col my-4 ml-6 space-y-1">
     <h2 class="text-sm">{weatherData.geolocation.default_name}</h2>
-    <h3
-      class="flex flex-row items-center justify-center space-x-2 text-base font-light"
-    >
+    <h3 class="flex flex-row space-x-2 text-base font-light">
       <div>{weatherData.days[0].TN_C}°</div>
       <div>|</div>
       <div class="font-bold">{weatherData.days[0].TX_C}°</div>
