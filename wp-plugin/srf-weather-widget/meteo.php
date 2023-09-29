@@ -1,23 +1,25 @@
 <?php
 /**
- * @package Meteo Widget
- */
-/*
-Plugin Name: Meteo
+ * @package SRF Weather Widget
+ *
+ * Plugin Name: SRF Weather Widget
 */
 
-
-
-// Now we set that function up to execute when the admin_notices action is called.
-
-// We need some CSS to position the paragraph.
 function meteo_resources() {
     echo '<script src="https://mmz-srf.github.io/srf-weather-widget/index.js" type="module"></script>';
     echo '<link rel="stylesheet" href="https://mmz-srf.github.io/srf-weather-widget/index.css">';
 }
 
-function meteo_widget() {
-    return '<div class="srf-weather-widget"></div>';
+function meteo_widget($atts = [], $content = null, $tag = '') {
+    $widgetAtts = shortcode_atts(
+        [
+            'size' => 'S',
+        ],
+        array_change_key_case( (array) $atts, CASE_LOWER ),
+        $tag
+    );
+
+    return '<div class="srf-weather-widget" data-size="'.esc_html($widgetAtts['size']).'"></div>';
 }
 
 add_action( 'wp_head', 'meteo_resources' );
