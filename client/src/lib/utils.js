@@ -44,11 +44,15 @@ const getGeolocationId = async (geolocation, locationName) => {
     geolocationId = geolocation;
   } else if (locationName) {
     if (locationName === "MyLocation") {
-      const position = await getPosition();
-      geolocationId = await getGeolocationIdByCoordinates(
-        position.coords.longitude,
-        position.coords.latitude
-      );
+      try {
+        const position = await getPosition();
+        geolocationId = await getGeolocationIdByCoordinates(
+          position.coords.longitude,
+          position.coords.latitude
+        );
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       geolocationId = await getGeolocationIdByLocationName(locationName);
     }
