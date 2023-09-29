@@ -20,7 +20,7 @@ const getGeolocationId = async (geolocation, locationName) => {
   return geolocationId;
 };
 
-export const fetchData = async (geolocation, locationName) => {
+export const getForecastPoint = async (geolocation, locationName) => {
   try {
     let geolocationId = await getGeolocationId(geolocation, locationName);
     const response = await fetch(

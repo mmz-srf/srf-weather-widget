@@ -6,7 +6,10 @@ document.querySelectorAll(".srf-weather-widget").forEach((element) => {
     props: {
       size: element.dataset.size,
       geolocation: element.dataset.geolocation,
-      locationName: element.dataset.locationName
+      locationName: element.dataset.locationName,
+      forecastPoint: element.dataset.forecastPoint
+        ? JSON.parse(element.dataset.forecastPoint)
+        : null
     }
   });
 });
