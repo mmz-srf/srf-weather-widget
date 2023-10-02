@@ -9,3 +9,15 @@
     background-color: lightblue;
     padding: 25px;
 }
+
+#srf-weather-widget-settings .error {
+    border: 1px solid red;
+    background-color: rgb(255,230,230);
+    color: red;
+    padding: 5px;
+}
+
+#srf-weather-widget-settings span.error-field {
+    color: red;
+    padding-left: 15px;
+}
