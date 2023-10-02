@@ -124,6 +124,7 @@
   };
 
   export let symbol;
+  export let dimensions;
 </script>
 
-<img src={iconMap[symbol]} alt="" class="w-14 h-14" />
+<img src={iconMap[symbol]} alt="" class={dimensions} />
