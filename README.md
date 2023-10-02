@@ -10,6 +10,7 @@ Demo: https://mmz-srf.github.io/srf-weather-widget/
 
 <!-- loads the code that renders the weather widget -->
 <script
+  async
   type="module"
   src="https://mmz-srf.github.io/srf-weather-widget/index.js"
 ></script>
