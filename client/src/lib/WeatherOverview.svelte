@@ -46,7 +46,7 @@
   </div>
   {#if ["L", "M"].includes(size.toUpperCase())}
     <div
-      class="flex flex-row ml-6 space-x-6 overflow-scroll text-xs font-bold scrollbar-hide mb-2"
+      class="flex flex-row mb-2 ml-6 mr-1 space-x-6 overflow-scroll text-xs font-bold scrollbar-hide scroll-shadow"
     >
       {#each weatherData.hours as hours, index}
         {#if index >= currentIndex}
@@ -55,7 +55,7 @@
               ? "Jetzt"
               : new Date(hours.date_time).toLocaleTimeString([], {
                   hour: "2-digit",
-                  minute: "2-digit"
+                  minute: "2-digit",
                 })}
             symbol={hours.symbol_code}
             dimensions="w-6 h-6"
@@ -79,5 +79,20 @@
   .scrollbar-hide {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+  }
+
+  .scroll-shadow {
+    background-image: linear-gradient(
+        to right,
+        rgba(8, 81, 139, 1),
+        rgba(8, 81, 139, 1)
+      ),
+      linear-gradient(to right, rgba(8, 81, 139, 1), rgba(8, 81, 139, 1)),
+      linear-gradient(to right, rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0)),
+      linear-gradient(to left, rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0));
+    background-position: left center, right center, left center, right center;
+    background-repeat: no-repeat;
+    background-size: 20px 100%, 20px 100%, 10px 100%, 10px 100%;
+    background-attachment: local, local, scroll, scroll;
   }
 </style>
