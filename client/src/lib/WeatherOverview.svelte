@@ -38,7 +38,7 @@
       />
     </div>
   </div>
-  {#if ["L", "M"].includes(size)}
+  {#if ["L", "M"].includes(size.toUpperCase())}
     <div
       class="flex flex-row ml-6 space-x-6 overflow-scroll text-xs font-bold scrollbar-hide"
     >
@@ -49,7 +49,7 @@
               ? "Jetzt"
               : new Date(hours.date_time).toLocaleTimeString([], {
                   hour: "2-digit",
-                  minute: "2-digit"
+                  minute: "2-digit",
                 })}
             symbol={hours.symbol_code}
             dimensions="w-6 h-6"
