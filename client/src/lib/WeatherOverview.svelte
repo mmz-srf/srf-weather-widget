@@ -4,6 +4,17 @@
 
   export let weatherData;
   export let size;
+  let currentIndex = -1;
+
+  const currentDate = new Date();
+
+  for (let i = 0; i < weatherData.hours.length; i++) {
+    const date_time = new Date(weatherData.hours[i].date_time);
+    if (date_time >= currentDate) {
+      currentIndex = i;
+      break;
+    }
+  }
 </script>
 
 <div
@@ -27,16 +38,16 @@
       />
     </div>
   </div>
-  {#if ["L", "M"].includes(size)}
+  {#if ["L", "M"].includes(size.toUpperCase())}
     <div
       class="flex flex-row h-20 ml-6 space-x-6 overflow-scroll text-xs font-bold scrollbar-hide"
     >
-      {#each weatherData.hours as hours}
-        {#if new Date(hours.date_time) >= new Date()}
+      {#each weatherData.hours as hours, index}
+        {#if index >= currentIndex}
           <SingleDay
             currentTime={new Date(hours.date_time).toLocaleTimeString([], {
               hour: "2-digit",
-              minute: "2-digit"
+              minute: "2-digit",
             })}
             symbol={hours.symbol_code}
             dimensions="w-6 h-6"
@@ -47,7 +58,7 @@
         {/if}
       {/each}
     </div>
-  {/if}
+  {:else if size.toUpperCase() === "L"}{/if}
 </div>
 
 <style>
