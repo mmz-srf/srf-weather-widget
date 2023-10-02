@@ -45,15 +45,16 @@
       {#each weatherData.hours as hours, index}
         {#if index >= currentIndex}
           <SingleDay
-            currentTime={new Date(hours.date_time).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+            currentTime={index === currentIndex
+              ? "Jetzt"
+              : new Date(hours.date_time).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
             symbol={hours.symbol_code}
             dimensions="w-6 h-6"
             dailyTemp={hours.TTT_C}
             rainInMM={hours.RRR_MM}
-            {size}
           />
         {/if}
       {/each}
