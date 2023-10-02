@@ -6,14 +6,25 @@
   export let size;
   export let mode;
 
-  const forecastItems = forecastPoint[mode].filter((item) => {
-    const currentDate = new Date();
+  const forecastItems = forecastPoint[mode]
+    .filter((item) => {
+      const currentDate = new Date();
 
-    if (mode === "days") {
-      currentDate.setHours(0, 0, 0, 0);
-    }
-    return new Date(item.date_time).getTime() >= currentDate.getTime();
-  });
+      if (mode === "days") {
+        currentDate.setHours(0, 0, 0, 0);
+      }
+      return new Date(item.date_time).getTime() >= currentDate.getTime();
+    })
+    .map((item, index, items) => {
+      const previousItem = items[index - 1];
+      if (previousItem) {
+        const previousDate = new Date(previousItem.date_time).getDate();
+        const currentDate = new Date(item.date_time).getDate();
+        item.isFirstItemOfDay = previousDate < currentDate;
+      }
+
+      return item;
+    });
 
   const getTime = (item, index, mode) => {
     let time = new Date(item.date_time).toLocaleTimeString([], {
@@ -29,6 +40,12 @@
           weekday: "long"
         })
         .replace(/, \d+:\d+:\d+/, "");
+    } else if (item.isFirstItemOfDay) {
+      time = new Date(item.date_time).toLocaleTimeString([], {
+        weekday: "long",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
     }
 
     return time;

@@ -14,7 +14,9 @@
 </script>
 
 <div class="flex flex-col items-center">
-  <div class={fontWeight}>{time}</div>
+  <div class={`h-8 flex items-end ${fontWeight}`}>
+    <span>{time}</span>
+  </div>
   <WeatherIcons {symbol} {dimensions} />
   <div class={`whitespace-nowrap ${size === "L" ? "mb-4" : ""}`}>{value}</div>
   {#if size === "L"}
