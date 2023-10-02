@@ -5,6 +5,7 @@
 #srf-weather-widget-settings .alert-info {
     display: block;
     border: 1px solid darkblue;
+    border-radius: 5px;
     background-color: lightblue;
     padding: 25px;
 }
