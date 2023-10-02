@@ -5,6 +5,8 @@
   export let symbol;
   export let dimensions;
   export let currentTime;
+  export let rainInMM;
+  export let size;
 
   const isNow = currentTime === "Jetzt";
   const fontWeight = isNow ? "font-bold" : "font-light";
@@ -14,4 +16,7 @@
   <div class={fontWeight}>{currentTime}</div>
   <WeatherIcons {symbol} {dimensions} />
   <div>{dailyTemp}°</div>
+  {#if size === "L"}
+    <div>{rainInMM}</div>
+  {/if}
 </div>
