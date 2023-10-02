@@ -10,12 +10,30 @@
     padding: 25px;
 }
 
-#srf-weather-widget-settings .error {
+#srf-weather-widget-settings .success {
+    display: block;
+    border: 1px solid darkgreen;
+    border-radius: 5px;
+    background-color: rgb(230,255,230);
+    padding: 25px;
+}
+
+#srf-weather-widget-settings ul.error {
     border: 1px solid red;
+    border-radius: 5px;
     background-color: rgb(255,230,230);
     color: red;
     padding: 5px;
 }
+
+#srf-weather-widget-settings ul.error > li
+{
+    margin: 25px;
+    list-style-type: square;
+}
+
+
+
 
 #srf-weather-widget-settings span.error-field {
     color: red;

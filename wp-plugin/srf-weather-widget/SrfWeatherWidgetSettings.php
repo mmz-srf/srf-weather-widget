@@ -13,7 +13,6 @@ class SrfWeatherWidgetSettings {
         add_action('admin_init', array(__CLASS__, 'initSettings'));
     }
 
-
     public static function validateGeolocation($value) {
         if (!$value) {
             return $value;
@@ -31,6 +30,36 @@ class SrfWeatherWidgetSettings {
         return $value;
     }
 
+    public static function validateNotEmptyApiKey($value) {
+        if (!$value) {
+            add_settings_error(
+                SrfWeatherWidgetSettings::SRF_WEATHER_API_KEY,
+                'not empty',
+                'App Id must not be empty.'
+            );
+
+            return get_option(SrfWeatherWidgetSettings::SRF_WEATHER_API_KEY);
+        }
+
+        return $value;
+    }
+
+    public static function validateNotEmptyApiSecret($value) {
+        if (!$value) {
+            add_settings_error(
+                SrfWeatherWidgetSettings::SRF_WEATHER_API_SECRET,
+                'not empty',
+                'App Secret must not be empty.'
+            );
+
+            return get_option(SrfWeatherWidgetSettings::SRF_WEATHER_API_SECRET);
+        }
+
+        return $value;
+    }
+
+
+
     public static function adminMenu() {
         add_menu_page(
             'SRF Weather',// page title
@@ -46,8 +75,8 @@ class SrfWeatherWidgetSettings {
     }
 
     public static function initSettings() {
-        register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_KEY);
-        register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_SECRET);
+        register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_KEY, [SrfWeatherWidgetSettings::class, 'validateNotEmptyApiKey']);
+        register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_SECRET, [SrfWeatherWidgetSettings::class, 'validateNotEmptyApiSecret']);
         register_setting(self::SRF_WEATHER_OPTION_GROUP, self::DEFAULT_LOCATION, [SrfWeatherWidgetSettings::class, 'validateGeolocation']);
         register_setting(self::SRF_WEATHER_OPTION_GROUP, self::DEFAULT_LOCATION_NAME);
     }
