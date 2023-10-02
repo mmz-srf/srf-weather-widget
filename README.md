@@ -24,6 +24,7 @@ Demo: https://mmz-srf.github.io/srf-weather-widget/
 | Parameter     | Attribute           | Possible Values          | Default                               | Required |
 | ------------- | ------------------- | ------------------------ | ------------------------------------- | -------- |
 | Size          | data-size           | S, M, L                  | S                                     | No       |
+| Mode          | data-mode           | hours, three_hours, days | hours                                 | No       |
 | Geolocation   | data-geolocation    |                          | 47.4171,8.5612 (Zürich Fernsehstudio) | No       |
 | Location Name | data-location-name  | Zürich, Genf, MyLocation |                                       | No       |
 | ForecastPoint | data-forecast-point | <ForecastPointWeek>      |                                       | No       |
