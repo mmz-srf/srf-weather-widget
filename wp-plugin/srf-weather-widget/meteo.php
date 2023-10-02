@@ -18,8 +18,8 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
     $widgetAtts = shortcode_atts(
         [
             'size' => 'S',
-            'geolocation' => '',
-            'locationname' => '',
+            'geolocation' => get_option(SrfWeatherWidgetSettings::DEFAULT_LOCATION),
+            'locationname' => get_option(SrfWeatherWidgetSettings::DEFAULT_LOCATION_NAME),
         ],
         array_change_key_case( (array) $atts, CASE_LOWER ),
         $tag
