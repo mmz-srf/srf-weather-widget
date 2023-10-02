@@ -5,6 +5,7 @@ export default {
       colors: {
         widget: {
           dark: "#08518B",
+          light: "#0A67B0",
         },
       },
     },
