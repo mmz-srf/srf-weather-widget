@@ -1,0 +1,10 @@
+#srf-weather-widget-settings label{
+    display: block;
+}
+
+#srf-weather-widget-settings .alert-info {
+    display: block;
+    border: 1px solid darkblue;
+    background-color: lightblue;
+    padding: 25px;
+}

@@ -5,6 +5,9 @@ class SrfWeatherWidgetSettings {
     const SRF_WEATHER_API_KEY = 'srf-weather-api-key';
     const SRF_WEATHER_API_SECRET = 'srf-weather-api-secret-key';
 
+    const DEFAULT_LOCATION = 'srf-weather-api-geolocation';
+    const DEFAULT_LOCATION_NAME = 'srf-weather-api-geolocation-name';
+
     public function __construct()
     {
         add_action('admin_menu', array(__CLASS__, 'adminMenu'));
@@ -30,5 +33,7 @@ class SrfWeatherWidgetSettings {
     public static function initSettings() {
         register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_KEY);
         register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_SECRET);
+        //register_setting(self::SRF_WEATHER_OPTION_GROUP, self::DEFAULT_LOCATION);
+        //register_setting(self::SRF_WEATHER_OPTION_GROUP, self::DEFAULT_LOCATION_NAME);
     }
 }

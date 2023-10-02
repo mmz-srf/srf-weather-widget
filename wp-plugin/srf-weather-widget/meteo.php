@@ -45,6 +45,12 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
         data-location-name="'.esc_html($widgetAtts['locationname']).'"></div>';
 }
 
+// add backend styles
+function srf_weather_widget_styles() {
+    wp_enqueue_style('srf_weather_widget', plugins_url('css/srf_weather_widget_backend_options.css', __FILE__));
+}
+
+add_action('admin_enqueue_scripts', 'srf_weather_widget_styles');
 add_action( 'wp_head', 'meteo_resources' );
 add_shortcode('meteo', 'meteo_widget'); // add your code.
 
