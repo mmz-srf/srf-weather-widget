@@ -3,7 +3,7 @@
   import WeatherOverview from "./lib/WeatherOverview.svelte";
   import { getForecastPoint } from "./lib/utils";
 
-  export let size;
+  export let size = "S";
   export let geolocation;
   export let locationName;
   export let forecastPoint;
@@ -12,12 +12,12 @@
 <TailwindCss />
 <main class="flex justify-center mt-2">
   {#if forecastPoint}
-    <WeatherOverview weatherData={forecastPoint} {size} />
+    <WeatherOverview weatherData={forecastPoint} size={size.toUpperCase()} />
   {:else}
     {#await getForecastPoint(geolocation, locationName)}
       <p>Loading...</p>
     {:then weatherData}
-      <WeatherOverview {weatherData} {size} />
+      <WeatherOverview {weatherData} size={size.toUpperCase()} />
     {:catch}
       <p>Error fetching data</p>
     {/await}
