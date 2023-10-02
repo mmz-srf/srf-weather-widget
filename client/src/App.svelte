@@ -4,6 +4,7 @@
   import { getForecastPoint } from "./lib/utils";
 
   export let size = "S";
+  export let mode = "hours";
   export let geolocation;
   export let locationName;
   export let forecastPoint;
@@ -12,12 +13,20 @@
 <TailwindCss />
 <main class="flex justify-center mt-2">
   {#if forecastPoint}
-    <WeatherOverview weatherData={forecastPoint} size={size.toUpperCase()} />
+    <WeatherOverview
+      {forecastPoint}
+      size={size.toUpperCase()}
+      mode={mode.toLowerCase()}
+    />
   {:else}
     {#await getForecastPoint(geolocation, locationName)}
       <p>Loading...</p>
-    {:then weatherData}
-      <WeatherOverview {weatherData} size={size.toUpperCase()} />
+    {:then forecastPoint}
+      <WeatherOverview
+        {forecastPoint}
+        size={size.toUpperCase()}
+        mode={mode.toLowerCase()}
+      />
     {:catch}
       <p>Error fetching data</p>
     {/await}

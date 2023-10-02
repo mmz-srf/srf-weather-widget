@@ -2,21 +2,21 @@
   import WeatherIcons from "./WeatherIcons.svelte";
   import RainBar from "./RainBar.svelte";
 
-  export let dailyTemp;
+  export let value;
   export let symbol;
   export let dimensions;
-  export let currentTime;
+  export let time;
   export let rainInMM;
   export let size;
 
-  const isNow = currentTime === "Jetzt";
+  const isNow = ["Jetzt", "Heute"].includes(time);
   const fontWeight = isNow ? "font-bold" : "font-light";
 </script>
 
 <div class="flex flex-col items-center">
-  <div class={fontWeight}>{currentTime}</div>
+  <div class={fontWeight}>{time}</div>
   <WeatherIcons {symbol} {dimensions} />
-  <div class={size === "L" && "mb-4"}>{dailyTemp}°</div>
+  <div class={`whitespace-nowrap ${size === "L" ? "mb-4" : ""}`}>{value}</div>
   {#if size === "L"}
     <RainBar {rainInMM} />
   {/if}

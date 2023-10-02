@@ -1,20 +1,43 @@
 <script>
-  import SingleDay from "./SingleDay.svelte";
+  import ForecastItem from "./ForecastItem.svelte";
   import WeatherIcons from "./WeatherIcons.svelte";
 
-  export let weatherData;
+  export let forecastPoint;
   export let size;
-  let currentIndex = -1;
+  export let mode;
 
-  const currentDate = new Date();
+  const forecastItems = forecastPoint[mode].filter((item) => {
+    const currentDate = mode === "days" ? new Date() : new Date();
+    return new Date(item.date_time).getTime() >= currentDate.getTime();
+  });
 
-  for (let i = 0; i < weatherData.hours.length; i++) {
-    const date_time = new Date(weatherData.hours[i].date_time);
-    if (date_time >= currentDate) {
-      currentIndex = i;
-      break;
+  const getTime = (item, index, mode) => {
+    let time = new Date(item.date_time).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+
+    if (index === 0) {
+      time = mode === "days" ? "Heute" : "Jetzt";
+    } else if (mode === "days") {
+      time = new Date(item.date_time)
+        .toLocaleTimeString([], {
+          weekday: "long"
+        })
+        .replace(/, \d+:\d+:\d+/, "");
     }
-  }
+
+    return time;
+  };
+
+  const getValue = (item, mode) => {
+    let value = `${item.TTT_C}°`;
+    if (mode === "days") {
+      value = `${item.TN_C}° | ${item.TX_C}°`;
+    }
+
+    return value;
+  };
 </script>
 
 <div
@@ -26,20 +49,20 @@
     <div class="flex flex-col my-4 ml-6 space-y-1">
       <h2 class="text-sm">
         <a
-          href={`https://www.srf.ch/meteo/wetter/${weatherData.geolocation.default_name}/${weatherData.geolocation.id}`}
+          href={`https://www.srf.ch/meteo/wetter/${forecastPoint.geolocation.default_name}/${forecastPoint.geolocation.id}`}
         >
-          {weatherData.geolocation.default_name}
+          {forecastPoint.geolocation.default_name}
         </a>
       </h2>
       <h3 class="flex flex-row space-x-2 text-base font-light">
-        <div>{weatherData.days[0].TN_C}°</div>
+        <div>{forecastPoint.days[0].TN_C}°</div>
         <div>|</div>
-        <div class="font-bold">{weatherData.days[0].TX_C}°</div>
+        <div class="font-bold">{forecastPoint.days[0].TX_C}°</div>
       </h3>
     </div>
     <div class="my-4 mr-4">
       <WeatherIcons
-        symbol={weatherData.days[0].symbol_code.toString()}
+        symbol={forecastPoint.days[0].symbol_code.toString()}
         dimensions="w-14 h-14"
       />
     </div>
@@ -48,22 +71,15 @@
     <div
       class="flex flex-row mb-2 ml-6 mr-1 space-x-6 overflow-scroll text-xs font-bold scrollbar-hide scroll-shadow"
     >
-      {#each weatherData.hours as hours, index}
-        {#if index >= currentIndex}
-          <SingleDay
-            currentTime={index === currentIndex
-              ? "Jetzt"
-              : new Date(hours.date_time).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-            symbol={hours.symbol_code}
-            dimensions="w-6 h-6"
-            dailyTemp={hours.TTT_C}
-            rainInMM={hours.RRR_MM}
-            {size}
-          />
-        {/if}
+      {#each forecastItems as item, index}
+        <ForecastItem
+          time={getTime(item, index, mode)}
+          symbol={item.symbol_code}
+          dimensions="w-6 h-6"
+          value={getValue(item, mode)}
+          rainInMM={item.RRR_MM}
+          {size}
+        />
       {/each}
     </div>
   {/if}
