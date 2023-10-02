@@ -1,5 +1,6 @@
 <script>
   import WeatherIcons from "./WeatherIcons.svelte";
+  import RainBar from "./RainBar.svelte";
 
   export let dailyTemp;
   export let symbol;
@@ -19,13 +20,6 @@
   <WeatherIcons {symbol} {dimensions} />
   <div class="mb-4">{dailyTemp}°</div>
   {#if size === "L"}
-    <div class="h-8 w-full flex flex-col-reverse items-center">
-      <div
-        class="bg-sky-500 w-1/2 max-h-8 relative flex flex-col items-center"
-        style={`height: ${rainInMM * 2.5}px;`}
-      >
-        <span class="absolute font-light">{rainInMM}</span>
-      </div>
-    </div>
+    <RainBar {rainInMM} />
   {/if}
 </div>
