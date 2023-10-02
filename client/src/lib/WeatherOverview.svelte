@@ -24,7 +24,13 @@
     class="flex flex-row items-center justify-between w-full max-w-sm tracking-widest text-white rounded-xl bg-widget-dark"
   >
     <div class="flex flex-col my-4 ml-6 space-y-1">
-      <h2 class="text-sm">{weatherData.geolocation.default_name}</h2>
+      <h2 class="text-sm">
+        <a
+          href={`https://www.srf.ch/meteo/wetter/${weatherData.geolocation.default_name}/${weatherData.geolocation.id}`}
+        >
+          {weatherData.geolocation.default_name}
+        </a>
+      </h2>
       <h3 class="flex flex-row space-x-2 text-base font-light">
         <div>{weatherData.days[0].TN_C}°</div>
         <div>|</div>
