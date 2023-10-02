@@ -7,7 +7,11 @@
   export let mode;
 
   const forecastItems = forecastPoint[mode].filter((item) => {
-    const currentDate = mode === "days" ? new Date() : new Date();
+    const currentDate = new Date();
+
+    if (mode === "days") {
+      currentDate.setHours(0, 0, 0, 0);
+    }
     return new Date(item.date_time).getTime() >= currentDate.getTime();
   });
 
