@@ -18,7 +18,7 @@
 <div class="flex flex-col items-center">
   <div class={fontWeight}>{currentTime}</div>
   <WeatherIcons {symbol} {dimensions} />
-  <div class="mb-4">{dailyTemp}°</div>
+  <div>{dailyTemp}°</div>
   {#if size === "L"}
     <RainBar {rainInMM} />
   {/if}
