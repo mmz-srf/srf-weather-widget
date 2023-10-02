@@ -40,7 +40,7 @@
   </div>
   {#if ["L", "M"].includes(size.toUpperCase())}
     <div
-      class="flex flex-row h-20 ml-6 space-x-6 overflow-scroll text-xs font-bold scrollbar-hide"
+      class="flex flex-row ml-6 space-x-6 overflow-scroll text-xs font-bold scrollbar-hide"
     >
       {#each weatherData.hours as hours, index}
         {#if index >= currentIndex}
