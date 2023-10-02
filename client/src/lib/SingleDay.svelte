@@ -9,8 +9,6 @@
   export let rainInMM;
   export let size;
 
-  rainInMM = 8;
-
   const isNow = currentTime === "Jetzt";
   const fontWeight = isNow ? "font-bold" : "font-light";
 </script>
