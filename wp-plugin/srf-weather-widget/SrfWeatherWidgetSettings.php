@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * Settings:
+ * API Key and API Secret are required and validated against the api by retreiving an access_token.
+ * Geolocation and name are optional.
+ * Geolocation is replaced with the next available geolocation in the api. These query is expensive and therefore only performed onced (by updating the setting with the correcgt value).
+ * Name is avaible as last resort and causes an expensive name search on everey (frontend) request.
+ */
 class SrfWeatherWidgetSettings {
     const SRF_WEATHER_OPTION_GROUP = 'srf-weather-widget-auth';
     const SRF_WEATHER_API_KEY = 'srf-weather-api-key';
