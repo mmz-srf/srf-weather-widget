@@ -11,10 +11,7 @@ require_once __DIR__ . '/SrfWeatherWidgetApiClient.php';
 
 const WIDGET_BASE_URL = 'https://mmz-srf.github.io/srf-weather-widget';
 const WIDGET_SIZES = ['S', 'M', 'L'];
-const API_DOMAIN = 'https://api.srgssr.ch';
-const API_BASE_URL = API_DOMAIN . '/srf-meteo/v2';
-const CACHE_TTL = 60; // seconds
-const REQUEST_TIMEOUT = 2; // seconds
+
 
 // We need some CSS to position the paragraph.
 function meteo_resources() {
