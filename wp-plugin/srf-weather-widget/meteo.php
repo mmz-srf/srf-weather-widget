@@ -8,10 +8,17 @@
 require_once __DIR__ . '/SrfWeatherWidgetSettings.php';
 require_once __DIR__ . '/SrfWeatherWidgetInstallation.php';
 
+const WIDGET_BASE_URL = 'https://mmz-srf.github.io/srf-weather-widget';
+const WIDGET_SIZES = ['S', 'M', 'L'];
+const API_DOMAIN = 'https://api.srgssr.ch';
+const API_BASE_URL = API_DOMAIN . '/srf-meteo/v2';
+const CACHE_TTL = 60; // seconds
+const REQUEST_TIMEOUT = 2; // seconds
+
 // We need some CSS to position the paragraph.
 function meteo_resources() {
-    echo '<script src="https://mmz-srf.github.io/srf-weather-widget/index.js" type="module"></script>';
-    echo '<link rel="stylesheet" href="https://mmz-srf.github.io/srf-weather-widget/index.css">';
+    echo '<script src="' . WIDGET_BASE_URL . '/index.js" type="module"></script>';
+    echo '<link rel="stylesheet" href="' . WIDGET_BASE_URL . '/index.css">';
 }
 
 function meteo_widget($atts = [], $content = null, $tag = '') {
@@ -26,7 +33,7 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
         $tag
     );
 
-    if (false === in_array($widgetAtts['size'], ['S', 'M', 'L'])) {
+    if (false === in_array($widgetAtts['size'], WIDGET_SIZES)) {
         return 'Not a valid widget size set.';
     }
 
@@ -34,78 +41,77 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
     $key = get_option(SrfWeatherWidgetSettings::SRF_WEATHER_API_KEY);
     $secret = get_option(SrfWeatherWidgetSettings::SRF_WEATHER_API_SECRET);
 
-    if (empty($widgetAtts['geolocation']) && empty($widgetAtts['locationname']) && !empty($key) && !empty($secret)) {
+    if (!empty($key) && !empty($secret)) {
         $encoded = base64_encode($key . ':' . $secret);
-
-        $apiDomain = 'https://api.srgssr.ch';
-        $apiBaseUrl = $apiDomain . '/srf-meteo/v2';
-        $cacheTtl = 60;
-        $requestTimeout = 2;
-
 
         // login
         $response = wp_remote_post(
-            $apiDomain . '/oauth/v1/accesstoken?grant_type=client_credentials',
+            API_DOMAIN . '/oauth/v1/accesstoken?grant_type=client_credentials',
             [
                 'headers' => [
                     'Authorization' => 'Basic ' . $encoded,
                     'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'
                 ],
-                'timeout' => $requestTimeout,
+                'timeout' => REQUEST_TIMEOUT,
             ]
         );
         $body = json_decode(wp_remote_retrieve_body($response), true);
         $accessToken = $body['access_token'];
 
+        $geolocationId = $widgetAtts['geolocation'];
 
-        // search by name
-        $response = get_transient('srf_weather_geolocation_names');
-        if (false === $response) {
-            $response = wp_remote_get(
-                $apiBaseUrl . '/geolocationNames?zip=8600',
-                [
-                    'headers' => [
-                        'Authorization' => 'Bearer ' . $accessToken,
-                    ],
-                    'timeout' => $requestTimeout,
-                ]
-            );
-            set_transient('srf_weather_geolocation_names', $response, $cacheTtl);
+        if (empty($geolocationId)) {
+            // search by name
+            $geolocationName = $widgetAtts['locationname'];
+            $cacheKey = hash('sha256', $geolocationName);
+            $response = get_transient('srf_weather_geolocation_names_' . $cacheKey);
+            if (false === $response) {
+                $response = wp_remote_get(
+                    API_BASE_URL . '/geolocationNames?name=' . $geolocationName,
+                    [
+                        'headers' => [
+                            'Authorization' => 'Bearer ' . $accessToken,
+                        ],
+                        'timeout' => REQUEST_TIMEOUT,
+                    ]
+                );
+                set_transient('srf_weather_geolocation_names_' . $cacheKey, $response, CACHE_TTL);
+            }
+            $body = json_decode(wp_remote_retrieve_body($response), true);
+            $geolocationId = $body['geolocation']['id'];
         }
-        $body = json_decode(wp_remote_retrieve_body($response), true);
-        $geolocationId = $body['geolocation']['id'];
-
 
         // get forecast data
-        $response = get_transient('srf_weather_forecastpoint');
+        $cacheKey = hash('sha256', $geolocationId);
+        $response = get_transient('srf_weather_forecastpoint_' . $cacheKey);
         if (false === $response) {
             $response = wp_remote_get(
-                $apiBaseUrl . '/forecastpoint/' . $geolocationId,
+                API_BASE_URL . '/forecastpoint/' . $geolocationId,
                 [
                     'headers' => [
                         'Authorization' => 'Bearer ' . $accessToken,
                     ],
-                    'timeout' => $requestTimeout,
+                    'timeout' => REQUEST_TIMEOUT,
                 ]
             );
-            set_transient('srf_weather_forecastpoint', $response, $cacheTtl);
+            set_transient('srf_weather_forecastpoint_' . $cacheKey, $response, CACHE_TTL);
         }
         $forecastpoint = wp_remote_retrieve_body($response);
     }
 
 
-    $widget = '<div class="srf-weather-widget" data-size="'.esc_html($widgetAtts['size']).'" data-mode="'.esc_html($widgetAtts['mode']).'"';
+    $widget = '<div class="srf-weather-widget" data-size="' . esc_html($widgetAtts['size']) . '" data-mode="' . esc_html($widgetAtts['mode']) . '"';
 
     if (!empty($widgetAtts['geolocation'])) {
-        $widget .= ' data-geolocation="'.esc_html($widgetAtts['geolocation']).'"';
+        $widget .= ' data-geolocation="' . esc_html($widgetAtts['geolocation']) . '"';
     }
 
     if (!empty($widgetAtts['locationname'])) {
-        $widget .= ' data-location-name="'.esc_html($widgetAtts['locationname']).'"';
+        $widget .= ' data-location-name="' . esc_html($widgetAtts['locationname']) . '"';
     }
 
     if (!empty($forecastpoint)) {
-        $widget .= ' data-forecast-point=\''.$forecastpoint.'\'';
+        $widget .= ' data-forecast-point=\'' . $forecastpoint . '\'';
     }
 
     $widget .= '></div>';
