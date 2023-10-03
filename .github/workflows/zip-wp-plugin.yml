@@ -13,8 +13,3 @@ jobs:
           type: 'zip'
           filename: 'wp-srf-weather-widget.zip'
           directory: ./wp-plugin
-      - name: Upload Release
-        uses: ncipollo/release-action@v1.12.0
-        with:
-          artifacts: 'wp-srf-weather-widget.zip'
-          token: ${{ secrets.GITHUB_TOKEN }}
