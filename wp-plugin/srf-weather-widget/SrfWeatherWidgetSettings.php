@@ -7,6 +7,8 @@ class SrfWeatherWidgetSettings {
     const DEFAULT_LOCATION = 'srf-weather-api-geolocation';
     const DEFAULT_LOCATION_NAME = 'srf-weather-api-geolocation-name';
 
+
+
     public function __construct()
     {
         add_action('admin_menu', array(__CLASS__, 'adminMenu'));
@@ -25,9 +27,28 @@ class SrfWeatherWidgetSettings {
                 'swiss geolocation identifier must be in the format: xx.xxxx,x.xxxx (e.g. 47.5239,8.5363)'
             );
 
-            return get_option(SrfWeatherWidgetSettings::DEFAULT_LOCATION);
+            return $value;
         }
-        return $value;
+
+        // Use the given keys to fetch the nearest point. Use the submittet options, not the
+        // stored one for that.
+        $key = $_POST[SrfWeatherWidgetSettings::SRF_WEATHER_API_KEY];
+        $secret = $_POST[SrfWeatherWidgetSettings::SRF_WEATHER_API_SECRET];
+        $token = SrfWeatherWidgetApiClient::getAccessToken($key, $secret);
+        $parts = array_filter(explode(',', $value), 'trim');
+        $nearest = SrfWeatherWidgetApiClient::getNearestGeolocations($parts[0], $parts[1], $token);
+        if (!count($nearest)) {
+            add_settings_error(
+                SrfWeatherWidgetSettings::DEFAULT_LOCATION,
+                'not ch',
+                'geolocation must be in switzerland.'
+            );
+
+            return $value;
+        } else {
+
+            return $nearest[0]['id'];
+        }
     }
 
     public static function validateNotEmptyApiKey($value) {

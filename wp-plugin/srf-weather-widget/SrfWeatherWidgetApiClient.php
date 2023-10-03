@@ -66,13 +66,13 @@ class SrfWeatherWidgetApiClient
         return  wp_remote_retrieve_body($response);
     }
 
-    public static function nearestGeolocation($longitude, $latitude, $accessToken)
+    public static function getNearestGeolocations($lat, $lon, $accessToken)
     {
-        $cacheKey = hash('sha256', 'near_'.$latitude.$longitude);
-        $response = get_transient('srf_weather_nearestloc' . $cacheKey);
-        if (false === $response) {
+        $cacheKey = hash('sha256', 'nearest_loc_'.$lat.$lon);
+        $response = get_transient('srf_weather_nearestlocations' . $cacheKey);
+       if (false === $response) {
             $response = wp_remote_get(
-                self::API_BASE_URL . sprintf('/geolocations/?longitude=%s&latitude=%s', $longitude, $latitude),
+                $url = self::API_BASE_URL . sprintf('/geolocations?latitude=%s&longitude=%s&ch=1', $lat, $lon),
                 [
                     'headers' => [
                         'Authorization' => 'Bearer ' . $accessToken,
@@ -80,7 +80,7 @@ class SrfWeatherWidgetApiClient
                     'timeout' => self::REQUEST_TIMEOUT,
                 ]
             );
-            set_transient('srf_weather_nearestloc' . $cacheKey, $response, self::CACHE_TTL);
+            set_transient('srf_weather_nearestlocations' . $cacheKey, $response, self::CACHE_TTL);
         }
 
          return json_decode(wp_remote_retrieve_body($response), true);
