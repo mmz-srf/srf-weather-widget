@@ -42,8 +42,8 @@ foreach($errors as $errorField) {
 
 
                 <h3>Default location</h3>
-                <p>Set either a defalut location by its location id (most accurate results, but the api must be used to find out a correct location). Or just use the name of the city.</p>
-                <label for="<?=SrfWeatherWidgetSettings::DEFAULT_LOCATION; ?>">Default Location (lat.lon):</label>
+                <p>Set either a default location by its location-id (most accurate results, but the api must be used to find out a correct location). Or just use the name of the city.</p>
+                <label for="<?=SrfWeatherWidgetSettings::DEFAULT_LOCATION; ?>">Default location-id (lat,lon):</label>
                 <input type="text" id="<?=SrfWeatherWidgetSettings::DEFAULT_LOCATION; ?>" name="<?=SrfWeatherWidgetSettings::DEFAULT_LOCATION; ?>" value="<?php echo esc_attr($location); ?>" />
                 <span class="error-field"><?= ($errorFields[SrfWeatherWidgetSettings::DEFAULT_LOCATION] ?? ''); ?></span>
                 <label for=<?=SrfWeatherWidgetSettings::DEFAULT_LOCATION_NAME; ?>>Default location name (if no location is given, search by name)</label>
