@@ -63,6 +63,6 @@ class SrfWeatherWidgetApiClient
             set_transient('srf_weather_forecastpoint_' . $cacheKey, $response, self::CACHE_TTL);
         }
 
-        return  wp_remote_retrieve_body($response);
+        return wp_remote_retrieve_body($response);
     }
 }
