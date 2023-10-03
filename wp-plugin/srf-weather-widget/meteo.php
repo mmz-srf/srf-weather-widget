@@ -56,7 +56,7 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
             $geolocationId = $body[0]['geolocation']['id'];
         }
 
-        $forecastPoint = SrfWeatherWidgetApiClient::getForecastData($geolocationId, $accessToken);
+        $forecastpoint = SrfWeatherWidgetApiClient::getForecastData($geolocationId, $accessToken);
     }
 
 
