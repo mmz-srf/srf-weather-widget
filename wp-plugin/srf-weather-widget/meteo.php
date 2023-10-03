@@ -7,6 +7,7 @@
 
 require_once __DIR__ . '/SrfWeatherWidgetSettings.php';
 require_once __DIR__ . '/SrfWeatherWidgetInstallation.php';
+require_once __DIR__ . '/SrfWeatherWidgetApiClient.php';
 
 const WIDGET_BASE_URL = 'https://mmz-srf.github.io/srf-weather-widget';
 const WIDGET_SIZES = ['S', 'M', 'L'];
@@ -37,67 +38,25 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
         return 'Not a valid widget size set.';
     }
 
+
     // generate basic auth token
     $key = get_option(SrfWeatherWidgetSettings::SRF_WEATHER_API_KEY);
     $secret = get_option(SrfWeatherWidgetSettings::SRF_WEATHER_API_SECRET);
 
     if (!empty($key) && !empty($secret)) {
-        $encoded = base64_encode($key . ':' . $secret);
 
         // login
-        $response = wp_remote_post(
-            API_DOMAIN . '/oauth/v1/accesstoken?grant_type=client_credentials',
-            [
-                'headers' => [
-                    'Authorization' => 'Basic ' . $encoded,
-                    'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'
-                ],
-                'timeout' => REQUEST_TIMEOUT,
-            ]
-        );
-        $body = json_decode(wp_remote_retrieve_body($response), true);
-        $accessToken = $body['access_token'];
-
+        $accessToken = SrfWeatherWidgetApiClient::getAccessToken($key, $secret);
         $geolocationId = $widgetAtts['geolocation'];
 
         if (empty($geolocationId)) {
             // search by name
             $geolocationName = $widgetAtts['locationname'];
-            $cacheKey = hash('sha256', $geolocationName);
-            $response = get_transient('srf_weather_geolocation_names_' . $cacheKey);
-            if (false === $response) {
-                $response = wp_remote_get(
-                    API_BASE_URL . '/geolocationNames?name=' . $geolocationName,
-                    [
-                        'headers' => [
-                            'Authorization' => 'Bearer ' . $accessToken,
-                        ],
-                        'timeout' => REQUEST_TIMEOUT,
-                    ]
-                );
-                set_transient('srf_weather_geolocation_names_' . $cacheKey, $response, CACHE_TTL);
-            }
-            $body = json_decode(wp_remote_retrieve_body($response), true);
-
+            $body = SrfWeatherWidgetApiClient::getGeolocationNames($geolocationName, $accessToken);
             $geolocationId = $body[0]['geolocation']['id'];
         }
 
-        // get forecast data
-        $cacheKey = hash('sha256', $geolocationId);
-        $response = get_transient('srf_weather_forecastpoint_' . $cacheKey);
-        if (false === $response) {
-            $response = wp_remote_get(
-                API_BASE_URL . '/forecastpoint/' . $geolocationId,
-                [
-                    'headers' => [
-                        'Authorization' => 'Bearer ' . $accessToken,
-                    ],
-                    'timeout' => REQUEST_TIMEOUT,
-                ]
-            );
-            set_transient('srf_weather_forecastpoint_' . $cacheKey, $response, CACHE_TTL);
-        }
-        $forecastpoint = wp_remote_retrieve_body($response);
+        $forecastPoint = SrfWeatherWidgetApiClient::getForecastData($geolocationId, $accessToken);
     }
 
 
