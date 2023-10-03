@@ -35,9 +35,10 @@
     if (index === 0) {
       time = mode === "days" ? "Heute" : "Jetzt";
     } else if (mode === "days") {
-      time = new Date(item.date_time).toLocaleTimeString([], {
+      const dateFormatter = new Intl.DateTimeFormat([], {
         weekday: "long"
       });
+      time = dateFormatter.format(new Date(item.date_time));
     } else if (item.isFirstItemOfDay) {
       time = new Date(item.date_time).toLocaleTimeString([], {
         weekday: "long",
@@ -68,6 +69,7 @@
     <div class="flex flex-col my-4 ml-6 space-y-1">
       <h2 class="text-sm">
         <a
+          class="text-white"
           href={`https://www.srf.ch/meteo/wetter/${forecastPoint.geolocation.default_name}/${forecastPoint.geolocation.id}`}
         >
           {forecastPoint.geolocation.default_name}

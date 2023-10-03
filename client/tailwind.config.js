@@ -1,6 +1,7 @@
 export default {
   content: ["./index.html", "./src/**/*.{svelte,js}"],
   plugins: [],
+  important: true,
   theme: {
     extend: {
       colors: {
