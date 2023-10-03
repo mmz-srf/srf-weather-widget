@@ -75,8 +75,8 @@ class SrfWeatherWidgetSettings {
     }
 
     public static function initSettings() {
-        register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_KEY, [SrfWeatherWidgetSettings::class, 'validateNotEmptyApiKey']);
-        register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_SECRET, [SrfWeatherWidgetSettings::class, 'validateNotEmptyApiSecret']);
+        register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_KEY, [SrfWeatherWidgetSettings::class]);
+        register_setting(self::SRF_WEATHER_OPTION_GROUP, self::SRF_WEATHER_API_SECRET, [SrfWeatherWidgetSettings::class]);
         register_setting(self::SRF_WEATHER_OPTION_GROUP, self::DEFAULT_LOCATION, [SrfWeatherWidgetSettings::class, 'validateGeolocation']);
         register_setting(self::SRF_WEATHER_OPTION_GROUP, self::DEFAULT_LOCATION_NAME);
     }
