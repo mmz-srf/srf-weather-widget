@@ -39,6 +39,8 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
 
         $apiDomain = 'https://api.srgssr.ch';
         $apiBaseUrl = $apiDomain . '/srf-meteo/v2';
+        $cacheTtl = 3600;
+        $requestTimeout = 2;
 
 
         // login
@@ -49,6 +51,7 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
                     'Authorization' => 'Basic ' . $encoded,
                     'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'
                 ],
+                'timeout' => $requestTimeout,
             ]
         );
         $body = json_decode(wp_remote_retrieve_body($response), true);
@@ -64,9 +67,10 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
                     'headers' => [
                         'Authorization' => 'Bearer ' . $accessToken,
                     ],
+                    'timeout' => $requestTimeout,
                 ]
             );
-            set_transient('srf_weather_geolocation_names', $response, 60 * 60);
+            set_transient('srf_weather_geolocation_names', $response, $cacheTtl);
         }
         $body = json_decode(wp_remote_retrieve_body($response), true);
         $geolocationId = $body['geolocation']['id'];
@@ -81,9 +85,10 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
                     'headers' => [
                         'Authorization' => 'Bearer ' . $accessToken,
                     ],
+                    'timeout' => $requestTimeout,
                 ]
             );
-            set_transient('srf_weather_forecastpoint', $response, 60 * 60);
+            set_transient('srf_weather_forecastpoint', $response, $cacheTtl);
         }
         $forecastpoint = wp_remote_retrieve_body($response);
     }
