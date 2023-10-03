@@ -35,11 +35,9 @@
     if (index === 0) {
       time = mode === "days" ? "Heute" : "Jetzt";
     } else if (mode === "days") {
-      time = new Date(item.date_time)
-        .toLocaleTimeString([], {
-          weekday: "long"
-        })
-        .replace(/, \d+:\d+:\d+/, "");
+      time = new Date(item.date_time).toLocaleTimeString([], {
+        weekday: "long"
+      });
     } else if (item.isFirstItemOfDay) {
       time = new Date(item.date_time).toLocaleTimeString([], {
         weekday: "long",

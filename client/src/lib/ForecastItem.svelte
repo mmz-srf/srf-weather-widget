@@ -15,7 +15,7 @@
 
 <div class="flex flex-col items-center">
   <div class={`h-8 flex items-end ${fontWeight}`}>
-    <span>{time}</span>
+    <span class="text-center">{time}</span>
   </div>
   <WeatherIcons {symbol} {dimensions} />
   <div class={`whitespace-nowrap ${size === "L" ? "mb-4" : ""}`}>{value}</div>
