@@ -78,7 +78,8 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
                 set_transient('srf_weather_geolocation_names_' . $cacheKey, $response, CACHE_TTL);
             }
             $body = json_decode(wp_remote_retrieve_body($response), true);
-            $geolocationId = $body['geolocation']['id'];
+
+            $geolocationId = $body[0]['geolocation']['id'];
         }
 
         // get forecast data
