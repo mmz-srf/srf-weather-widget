@@ -42,7 +42,7 @@ class SrfWeatherWidgetApiClient
             set_transient('srf_weather_geolocation_names_' . $cacheKey, $response, self::CACHE_TTL);
         }
 
-        return json_decode(wp_remote_retrieve_body($response), true);;
+        return json_decode(wp_remote_retrieve_body($response), true);
     }
 
     public static function getForecastData($geolocationId, $accessToken)
