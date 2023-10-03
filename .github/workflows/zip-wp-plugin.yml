@@ -6,10 +6,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Archive Release
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create zip archive
         uses: thedoctor0/zip-release@0.7.1
         with:
           type: 'zip'
           filename: 'wp-srf-weather-widget.zip'
           directory: ./wp-plugin
+
+      - name: Upload zip
+        uses: actions/upload-artifact@v3
+        with:
+          name: 'wp-srf-weather-widget.zip'
+          path: ./
