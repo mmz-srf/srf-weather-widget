@@ -22,7 +22,7 @@ class SrfWeatherWidgetApiClient
         );
         $body = json_decode(wp_remote_retrieve_body($response), true);
 
-        return $body['access_token'];
+        return isset($body['access_token']) ? $body['access_token'] : '';
     }
 
     public static function getGeolocationNames($geolocationName, $accessToken) {
