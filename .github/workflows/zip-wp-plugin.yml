@@ -14,7 +14,7 @@ jobs:
           filename: 'wp-srf-weather-widget.zip'
           directory: ./wp-plugin
       - name: Upload Release
-        uses: ncipollo/release-action@v1.12.0
+        uses: ncipollo/release-action@v1.13.0
         with:
           artifacts: 'wp-srf-weather-widget.zip'
           token: ${{ secrets.GITHUB_TOKEN }}
