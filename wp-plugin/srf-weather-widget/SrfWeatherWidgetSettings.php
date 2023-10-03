@@ -81,3 +81,5 @@ class SrfWeatherWidgetSettings {
         register_setting(self::SRF_WEATHER_OPTION_GROUP, self::DEFAULT_LOCATION_NAME);
     }
 }
+
+new SrfWeatherWidgetSettings();

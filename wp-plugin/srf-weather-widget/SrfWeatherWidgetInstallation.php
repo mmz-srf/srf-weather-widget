@@ -24,3 +24,5 @@ class SrfWeatherWidgetInstallation
         delete_option(SrfWeatherWidgetSettings::SRF_WEATHER_API_SECRET);
     }
 }
+
+new SrfWeatherWidgetInstallation();
