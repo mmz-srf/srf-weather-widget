@@ -18,7 +18,7 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
     $widgetAtts = shortcode_atts(
         [
             'size' => 'S',
-            'mode' => 'days',
+            'mode' => 'hours',
             'geolocation' => get_option(SrfWeatherWidgetSettings::DEFAULT_LOCATION),
             'locationname' => get_option(SrfWeatherWidgetSettings::DEFAULT_LOCATION_NAME),
         ],
@@ -30,16 +30,16 @@ function meteo_widget($atts = [], $content = null, $tag = '') {
         return 'Not a valid widget size set.';
     }
 
-    if (empty($widgetAtts['geolocation']) && empty($widgetAtts['locationname'])) {
+    // generate basic auth token
+    $key = get_option(SrfWeatherWidgetSettings::SRF_WEATHER_API_KEY);
+    $secret = get_option(SrfWeatherWidgetSettings::SRF_WEATHER_API_SECRET);
 
-        // generate basic auth token
-        $key = get_option(SrfWeatherWidgetSettings::SRF_WEATHER_API_KEY);
-        $secret = get_option(SrfWeatherWidgetSettings::SRF_WEATHER_API_SECRET);
+    if (empty($widgetAtts['geolocation']) && empty($widgetAtts['locationname']) && !empty($key) && !empty($secret)) {
         $encoded = base64_encode($key . ':' . $secret);
 
         $apiDomain = 'https://api.srgssr.ch';
         $apiBaseUrl = $apiDomain . '/srf-meteo/v2';
-        $cacheTtl = 3600;
+        $cacheTtl = 60;
         $requestTimeout = 2;
 
 
