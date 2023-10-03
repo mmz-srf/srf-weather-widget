@@ -87,7 +87,3 @@ function srf_weather_widget_styles() {
 add_action('admin_enqueue_scripts', 'srf_weather_widget_styles');
 add_action( 'wp_head', 'meteo_resources' );
 add_shortcode('meteo', 'meteo_widget'); // add your code.
-
-// handle installation and backend Hooks
-new SrfWeatherWidgetSettings();
-new SrfWeatherWidgetInstallation();
