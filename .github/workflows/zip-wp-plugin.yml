@@ -1,0 +1,20 @@
+name: Create wp-plugin zip
+on:
+  push:
+    branches: ["main"]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Archive Release
+        uses: thedoctor0/zip-release@0.7.1
+        with:
+          type: 'zip'
+          filename: 'wp-srf-weather-widget.zip'
+          directory: ./wp-plugin
+      - name: Upload Release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          artifacts: 'wp-srf-weather-widget.zip'
+          token: ${{ secrets.GITHUB_TOKEN }}
