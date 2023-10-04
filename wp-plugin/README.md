@@ -1,9 +1,5 @@
 ## Wordpress Plugin for SRF Weather Widget
 
-### Installation
-
-tbd
-
 ### Shortcode usage
 
 The following shortcode can be added to a post's content or in the theme of your blog at your prefered position (e.g. sidebar). Just click on the Plus-Button, choose "shortcode" and enter the widget's shortcode like below.  
