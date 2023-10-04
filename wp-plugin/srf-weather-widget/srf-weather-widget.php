@@ -15,8 +15,8 @@ const WIDGET_SIZES = ['S', 'M', 'L'];
 
 // We need some CSS to position the paragraph.
 function meteo_resources() {
-    echo '<script src="' . WIDGET_BASE_URL . '/index.js" type="module"></script>';
-    echo '<link rel="stylesheet" href="' . WIDGET_BASE_URL . '/index.css">';
+    echo '<script src="' . WIDGET_BASE_URL . '/main.js" type="module"></script>';
+    echo '<link rel="stylesheet" href="' . WIDGET_BASE_URL . '/main.css">';
 }
 
 function meteo_widget($atts = [], $content = null, $tag = '') {

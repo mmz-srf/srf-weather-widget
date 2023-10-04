@@ -1,14 +1,15 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
-import { createHtmlPlugin } from "vite-plugin-html";
-import webExtension from "vite-plugin-web-extension";
+import { crx } from "@crxjs/vite-plugin";
+import manifest from "./manifest.json";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
     rollupOptions: {
+      input: ["index.html", "main.html"],
       output: {
-        entryFileNames: "[name].js",
+        chunkFileNames: "[name].js",
         assetFileNames: (chunk) => {
           if (chunk.name.includes("css")) {
             return "[name].[ext]";
@@ -19,24 +20,6 @@ export default defineConfig({
       },
     },
   },
-  plugins: [
-    createHtmlPlugin({
-      minify: true,
-      pages: [
-        {
-          entry: "src/main.js",
-          filename: "index.html",
-          template: "index.html",
-        },
-        {
-          entry: "src/main.js",
-          filename: "main.html",
-          template: "main.html",
-        },
-      ],
-    }),
-    svelte(),
-    webExtension(),
-  ],
+  plugins: [svelte(), crx({ manifest })],
   base: "./",
 });
