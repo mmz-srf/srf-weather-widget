@@ -13,12 +13,12 @@ jobs:
         uses: thedoctor0/zip-release@0.7.1
         with:
           type: 'zip'
-          filename: "wp-srf-weather-widget.zip"
+          filename: "srf-weather-widget.zip"
           directory: "./wp-plugin"
           path: "./srf-weather-widget"
 
       - name: Upload zip
         uses: actions/upload-artifact@v3
         with:
-          name: 'wp-srf-weather-widget'
-          path: './wp-plugin/wp-srf-weather-widget.zip'
+          name: 'srf-weather-widget'
+          path: './wp-plugin/srf-weather-widget.zip'
