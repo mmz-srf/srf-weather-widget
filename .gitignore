@@ -1,3 +1,6 @@
 .idea/
 /wp-full/
 .DS_Store
+wp-plugin/akismet/
+wp-plugin/hello.php
+wp-plugin/index.php
