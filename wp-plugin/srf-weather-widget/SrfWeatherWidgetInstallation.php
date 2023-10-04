@@ -4,7 +4,6 @@ class SrfWeatherWidgetInstallation
 {
     public function __construct()
     {
-        // Hook, um Standardwerte beim Aktivieren des Plugins zu setzen
         // set defaults after activation
         register_activation_hook(__FILE__, array(__CLASS__, 'activate'));
         // remove stuff after deactivation plugin
