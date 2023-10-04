@@ -12,11 +12,11 @@ Demo: https://mmz-srf.github.io/srf-weather-widget/
 <script
   async
   type="module"
-  src="https://mmz-srf.github.io/srf-weather-widget/index.js"
+  src="https://mmz-srf.github.io/srf-weather-widget/main.js"
 ></script>
 <link
   rel="stylesheet"
-  href="https://mmz-srf.github.io/srf-weather-widget/index.css"
+  href="https://mmz-srf.github.io/srf-weather-widget/main.css"
 />
 ```
 
