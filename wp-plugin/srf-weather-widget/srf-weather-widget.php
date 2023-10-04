@@ -3,7 +3,7 @@
  * Plugin Name: SRF Weather Widget
  * Plugin URI:  https://mmz-srf.github.io/srf-weather-widget/
  * Description: Add SRF Weather Widget to your posts or theme.
-*/
+ */
 
 require_once __DIR__ . '/SrfWeatherWidgetSettings.php';
 require_once __DIR__ . '/SrfWeatherWidgetInstallation.php';
