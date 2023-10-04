@@ -1,0 +1,13 @@
+{
+  "name": "SRF Weather Widget",
+  "version": "1.0.0",
+  "description": "Daily and Weekly Forecasts: Plan your week with accurate forecasts that include high and low temperatures and precipitation chances.",
+  "manifest_version": 3,
+  "author": "SRF Cobalt Team",
+  "action": {
+    "default_popup": "main.html",
+    "default_title": "SRF Weather Widget"
+  },
+  "permissions": ["activeTab", "contextMenus", "storage", "geolocation"],
+  "host_permissions": ["*://*.srf.ch/*", "https://www.srf.ch/meteo/wetter/*"]
+}
