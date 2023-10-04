@@ -1,6 +1,7 @@
 <?php
-/* Plugin Name: SRF Weather Widget
-* Plugin URI:  https://mmz-srf.github.io/srf-weather-widget/
+/*
+ * Plugin Name: SRF Weather Widget
+ * Plugin URI:  https://mmz-srf.github.io/srf-weather-widget/
  * Description: Add SRF Weather Widget to your posts or theme.
 */
 
