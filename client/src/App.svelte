@@ -1,5 +1,4 @@
 <script>
-  import TailwindCss from "./lib/TailwindCSS.svelte";
   import WeatherOverview from "./lib/WeatherOverview.svelte";
   import { getForecastPoint } from "./lib/utils";
 
@@ -10,8 +9,18 @@
   export let forecastPoint;
 </script>
 
-<TailwindCss />
-<main class="flex justify-center mt-2">
+<main
+  class="flex justify-center mt-2"
+  style={`
+  line-height: 1.5; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -moz-tab-size: 4; /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4; /* 3 */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+  font-feature-settings: normal; /* 5 */
+  font-variation-settings: normal; /* 6 */`}
+>
   {#if forecastPoint}
     <WeatherOverview
       {forecastPoint}
